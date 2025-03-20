@@ -1,10 +1,66 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: root
+    url: ${DATA_SOURCE_URL:jdbc:mysql://192.168.179.90:3306/bid_main_library?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8}
+    username: ${DATA_SOURCE_USERNAME:root}
+    password: ${DATA_SOURCE_PASSWORD:ZzChina01$}
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 初始化时建立物理连接的个数
+      initial-size: 5
+      # 最小连接池数量
+      min-idle: 5
+      # 最大连接池数量
+      max-active: 20
+      # 获取连接时最大等待时间，单位毫秒
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      # 用来检测连接是否有效的 sql，要求是一个查询语句
+      validation-query: SELECT 1 FROM DUAL
+      # 申请连接时执行 validationQuery 检测连接是否有效，做了这个配置会降低性能
+      test-while-idle: true
+      # 申请连接时执行 validationQuery 检测连接是否有效，做了这个配置会降低性能
+      test-on-borrow: false
+      # 归还连接时执行 validationQuery 检测连接是否有效，做了这个配置会降低性能
+      test-on-return: false
+      # 是否缓存 preparedStatement，也就是 PSCache。PSCache 对支持游标的数据库性能提升巨大，比如说 oracle。在 mysql 下建议关闭。
+      pool-prepared-statements: false
+      # 要启用 PSCache，必须配置大于 0，当大于 0 时，poolPreparedStatements 自动触发修改为 true。
+      max-pool-prepared-statement-per-connection-size: 20
+      # 配置监控统计拦截的 filters，去掉后监控界面 sql 无法统计，'wall'用于防火墙
+      filters: stat,wall,log4j
+      # 通过 connectProperties 属性来打开 mergeSql 功能；慢 SQL 记录
+      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 合并多个 DruidDataSource 的监控数据
+      use-global-data-source-stat: true
+#mybatis-plus配置
 mybatis-plus:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.example.demo.entity
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: cn.zhongzhi.domain
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      #主键类型  0:"数据库ID自增", 1:"不操作", 2:"用户输入ID",3:"数字型snowflake", 4:"全局唯一ID UUID", 5:"字符串型snowflake";
+      id-type: ASSIGN_ID
+      #字段策略
+      insert-strategy: not_null
+      update-strategy: not_null
+      #驼峰下划线转换
+      table-underline: true
+      # 逻辑删除配置
+      # 逻辑删除全局值（1表示已删除，这也是Mybatis Plus的默认配置）
+      logic-delete-value: 1
+      # 逻辑未删除全局值（0表示未删除，这也是Mybatis Plus的默认配置）
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+    #mybatis-plus配置控制台打印完整带参数SQL语句
+    #log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
