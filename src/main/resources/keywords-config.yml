@@ -1,0 +1,130 @@
+keyword-config:
+  outer-groups:
+    - file-set-schema: 法定代表人身份证明
+      file-item-schema:
+        - match-keywords:
+            - 姓名
+            - 性别
+            - 民族
+            - 出生
+            - 住址
+          exclude-keywords:
+          table-name: legal_representative
+          file-item-schema-name: 身份证正面
+          schema: |
+            { 
+                "type": "object",
+                "title": "id-card-front",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "姓名"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "title": "性别"
+                  },
+                  "nation": {
+                    "type": "string",
+                    "title": "民族"
+                  },
+                  "address": {
+                    "type": "string",
+                    "title": "住址"
+                  },
+                  "id_number": {
+                    "type": "string",
+                    "title": "身份证号码"
+                  },
+                  "birth_date": {
+                    "type": "string",
+                    "title": "出生日期"
+                  }
+                }
+            }
+        - match-keywords:
+            - 中华
+            - 人民
+            - 共和国
+            - 签发
+            - 机关
+          exclude-keywords:
+          table-name: legal_representative_back
+          file-item-schema-name: 身份证反面
+          schema: |
+            {
+              "type":"object",
+              "title":"back_message",
+                "properties":{
+                  "valid_period_end":{
+                    "type":"string",
+                    "title":"有效期限结束日期"
+                  },
+                  "issuing_authority":{
+                    "type":"string",
+                    "title":"签发机关"
+                  },
+                  "valid_period_start":{
+                    "type":"string",
+                    "title":"有效期限起始日期"
+                  }
+                }
+            }
+    - file-set-schema: 资格审查
+      file-item-schema:
+        - match-keywords:
+            - 建筑业
+            - 企业名称
+            - 详细地址
+            - 资质类别
+            - 等级
+          exclude-keywords:
+          table-name: construction_engineering_qualification
+          file-item-schema-name: 建筑业企业资质名称
+          schema: |
+            {
+              "type": "object",
+              "title": "qualification_certificate_message",
+                "properties": {
+                    "economic_nature": {
+                        "type": "string",
+                        "title": "经济性质"
+                    },
+                    "USCI": {
+                        "type": "string",
+                        "title": "统一社会信用代码"
+                    },
+                    "legal_person_representative": {
+                        "type": "string",
+                        "title": "法人代表"
+                    },
+                    "licence_issuing": {
+                        "type": "string",
+                        "title": "发证机关"
+                    },
+                    "detail_address": {
+                        "type": "string",
+                        "title": "详细地址"
+                    },
+                    "certification_categories_grades": {
+                        "type": "string",
+                        "title": "资质类别和等级"
+                    },
+                    "validity_period": {
+                        "type": "string",
+                        "title": "有效期"
+                    },
+                    "firm_name": {
+                        "type": "string",
+                        "title": "企业名称"
+                    },
+                    "registered_capital": {
+                        "type": "string",
+                        "title": "注册资人"
+                    },
+                    "certificate_number": {
+                        "type": "string",
+                        "title": "证书编号"
+                    }
+                }
+            }
