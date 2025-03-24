@@ -70,6 +70,310 @@ keyword-config:
                   }
                 }
             }
+    - file-set-schema: 投标保证
+      file-item-schema:
+        - match-keywords:
+            - 审核
+            - 开户许可
+            - 开户银行
+            - 基本存款
+            - 开户条件
+          exclude-keywords:
+          table-name: bank_account_opening_license
+          file-item-schema-name: 开户许可
+          schema: |
+            {
+              "title": "bank_account_opening_license",
+              "type": "object",
+              "properties": {
+                "certificate_number": {
+                  "type": "string",
+                  "title": "编号"
+                },
+                "company_name": {
+                  "type": "string",
+                  "title": "存款人名称"
+                },
+                "issuing_bank": {
+                  "type": "string",
+                  "title": "开户银行"
+                },
+                "legal_representative": {
+                  "type": "string",
+                  "title": "法定代表人"
+                },
+                "approval_number": {
+                  "type": "string",
+                  "title": "核准号"
+                },
+                "account_number": {
+                  "type": "string",
+                  "title": "账号"
+                },
+                "issue_date": {
+                  "type": "string",
+                  "title": "发证日期"
+                },
+                "issuing_authority": {
+                  "type": "string",
+                  "title": "发证机关"
+                }
+              }
+            }
+    - file-set-schema: 项目管理机构
+      file-item-schema:
+        - match-keywords:
+            - 高级专业
+            - 技术职务
+            - 委员会评审
+            - 考核认定
+            - 持证人签名
+          exclude-keywords:
+          table-name: senior_engineer_certificate_first
+          file-item-schema-name: 高级工程师职称证书-首页
+          schema: |
+            {
+              "title": "senior_engineer_certificate_first",
+              "type": "object",
+              "properties": {
+                "holder_signature": {
+                  "type": "string",
+                  "title": "持证人签名"
+                }
+              }
+            }
+        - match-keywords:
+            - 现从事专业
+            - 原专业技术
+            - 职务资格
+            - 公布时间
+            - 公布问好
+          exclude-keywords:
+          table-name: senior_engineer_certificate_last
+          file-item-schema-name: 高级工程师职称证书-尾页
+          schema: |
+            {
+              "title": "senior_engineer_certificate_last",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "title": "姓名"
+                },
+                "gender": {
+                  "type": "string",
+                  "title": "性别"
+                },
+                "birth_date": {
+                  "type": "string",
+                  "title": "出生年月"
+                },
+                "work_unit": {
+                  "type": "string",
+                  "title": "工作单位"
+                },
+                "current_specialty": {
+                  "type": "string",
+                  "title": "现从事专业"
+                },
+                "previous_qualification": {
+                  "type": "string",
+                  "title": "原专业技术职务资格"
+                },
+                "current_qualification": {
+                  "type": "string",
+                  "title": "现专业技术职务资格"
+                },
+                "certificate_number": {
+                  "type": "string",
+                  "title": "资格证书编号"
+                },
+                "review_date": {
+                  "type": "string",
+                  "title": "评审时间"
+                },
+                "announcement_date": {
+                  "type": "string",
+                  "title": "公布时间"
+                },
+                "approval_document": {
+                  "type": "string",
+                  "title": "公布文号"
+                }
+              }
+            }
+    - file-set-schema: 项目管理机构
+      file-item-schema:
+        - match-keywords:
+            - 中标通知书
+            - 中标范围
+            - 中标金额
+            - 销项税额
+            - 附加税额
+          exclude-keywords:
+          file-item-schema-name: 中标通知书-首页
+          table-name: bid_winning_notice_first
+          schema: |
+            {
+              "title": "bid_winning_notice",
+              "type": "object",
+              "properties": {
+                "notice_number": {
+                  "type": "string",
+                  "title": "中标通知书编号"
+                },
+                "project_number": {
+                  "type": "string",
+                  "title": "项目编号"
+                },
+                "company_name": {
+                  "type": "string",
+                  "title": "中标单位"
+                },
+                "road_length": {
+                  "type": "string",
+                  "title": "道路长度"
+                },
+                "road_width": {
+                  "type": "string",
+                  "title": "路幅宽度"
+                },
+                "bid_amount_capitalized": {
+                  "type": "string",
+                  "title": "中标金额-大写"
+                },
+                "bid_amount_numeric": {
+                  "type": "string",
+                  "title": "中标金额-小写"
+                },
+                "direct_cost": {
+                  "type": "string",
+                  "title": "直接费用"
+                },
+                "safety_fee": {
+                  "type": "string",
+                  "title": "安全文明费"
+                },
+                "social_insurance": {
+                  "type": "string",
+                  "title": "社会保险费"
+                },
+                "construction_period": {
+                  "type": "string",
+                  "title": "工期"
+                },
+                "project_manager_name": {
+                  "type": "string",
+                  "title": "项目负责人-姓名"
+                },
+                "project_manager_registration_number": {
+                  "type": "string",
+                  "title": "项目负责人-注册证号"
+                },
+                "project_manager_safety_certificate": {
+                  "type": "string",
+                  "title": "项目负责人-安全B证"
+                },
+                "project_manager_id_number": {
+                  "type": "string",
+                  "title": "项目负责人-身份证号"
+                },
+                "technical_leader_name": {
+                  "type": "string",
+                  "title": "技术负责人-姓名"
+                },
+                "technical_leader_certificate_number": {
+                  "type": "string",
+                  "title": "技术负责人-岗位证书编号"
+                },
+                "technical_leader_id_number": {
+                  "type": "string",
+                  "title": "技术负责人-身份证号"
+                },
+                "construction_crew": {
+                  "type": "array",
+                  "title": "施工员",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "title": "姓名"
+                      },
+                      "position_certificate": {
+                        "type": "string",
+                        "title": "岗位证书编号"
+                      },
+                      "id_number": {
+                        "type": "string",
+                        "title": "身份证号"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+        - match-keywords:
+            - 付款方式
+            - 建设单位
+            - 招标代理机构
+            - 招投标监管机构备案
+          exclude-keywords:
+          table-name: bid_winning_notice_last
+          file-item-schema-name: 中标通知书-尾页
+          schema: |
+            {
+                "title": "bid_inning_notice",
+                "type": "object",
+                "properties": {
+                  "safety_officers": {
+                    "type": "array",
+                    "title": "安全员",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {"type": "string", "title": "姓名"},
+                        "position_certificate": {"type": "string", "title": "岗位证书编号"},
+                        "safety_certificate": {"type": "string", "title": "安全生产C证"},
+                        "id_number": {"type": "string", "title": "身份证号"}
+                      }
+                    }
+                  },
+                  "quality_officer_name": {
+                    "type": "string",
+                    "title": "质量员-姓名"
+                  },
+                  "quality_officer_certificate_number": {
+                    "type": "string",
+                    "title": "质量员-岗位证书编号"
+                  },
+                  "quality_officer_id_number": {
+                    "type": "string",
+                    "title": "质量员-身份证号"
+                  },
+                  "performance_bond_amount": {
+                    "type": "string",
+                    "title": "履约保证金金额"
+                  },
+                  "submission_deadline": {
+                    "type": "string",
+                    "title": "提交截止时间"
+                  },
+                  "contract_signature_authority": {
+                    "type": "string",
+                    "title": "建设单位签章"
+                  },
+                  "bidding_agency_signature": {
+                    "type": "string",
+                    "title": "招标代理机构签章"
+                  },
+                  "record_stamp_date": {
+                    "type": "string",
+                    "title": "中标备案日期"
+                  }
+                }
+            }
+
     - file-set-schema: 资格审查
       file-item-schema:
         - match-keywords:

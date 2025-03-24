@@ -13,6 +13,7 @@ public class LegalRepresentativeBack {
     @TableId
     private String id;
     private String bidderId;
+    private String fileId;
     private String legalRepresentativeId;
     private String validPeriodEnd;
     private String issuingAuthority;

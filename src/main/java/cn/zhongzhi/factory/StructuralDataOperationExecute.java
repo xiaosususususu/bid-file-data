@@ -1,10 +1,9 @@
 package cn.zhongzhi.factory;
 
 
-import cn.hutool.json.JSONObject;
 import cn.zhongzhi.enums.TableNameMapServiceEnum;
-import cn.zhongzhi.service.StructuralDataPublicInterface;
-import jakarta.annotation.Resource;
+import cn.zhongzhi.service.IStructuralDataPublicInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -15,8 +14,8 @@ import java.util.Map;
  */
 @Component
 public class StructuralDataOperationExecute {
-    @Resource
-    private Map<String, StructuralDataPublicInterface> structuralDataPublicInterfaceMap;
+    @Autowired
+    private Map<String, IStructuralDataPublicInterface> structuralDataPublicInterfaceMap;
 
     /**
      * 执行方法

@@ -2,7 +2,7 @@ package cn.zhongzhi.controller;
 
 
 import cn.zhongzhi.domain.LegalRepresentative;
-import cn.zhongzhi.service.ILegalRepresentativeService;
+import cn.zhongzhi.service.LegalRepresentativeService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/test")  // 显式指定类路径
 public class TestController {
     @Resource
-    private ILegalRepresentativeService legalRepresentativeService;
+    private LegalRepresentativeService legalRepresentativeService;
     @GetMapping("/testGet")  // 完整路径: /test/testGet
     public List<LegalRepresentative> testGet() {
         return legalRepresentativeService.list();
