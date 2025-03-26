@@ -290,7 +290,7 @@ keyword-config:
                   "type": "string",
                   "title": "技术负责人-身份证号"
                 },
-                "construction_crew": {
+                "construction_crews": {
                   "type": "array",
                   "title": "施工员",
                   "items": {
@@ -323,10 +323,10 @@ keyword-config:
           file-item-schema-name: 中标通知书-尾页
           schema: |
             {
-                "title": "bid_inning_notice",
+                "title": "bid_winning_notice",
                 "type": "object",
                 "properties": {
-                  "safety_officers": {
+                  "safety_officers_list": {
                     "type": "array",
                     "title": "安全员",
                     "items": {
@@ -373,62 +373,447 @@ keyword-config:
                   }
                 }
             }
-
-    - file-set-schema: 资格审查
+    - file-set-schema: 项目管理机构
       file-item-schema:
         - match-keywords:
-            - 建筑业
-            - 企业名称
-            - 详细地址
-            - 资质类别
-            - 等级
+            - 项目名称
+            - 甲方
+            - 乙方
+            - 签约地点
+            - 签订日期
           exclude-keywords:
-          table-name: construction_engineering_qualification
-          file-item-schema-name: 建筑业企业资质名称
+          table-name: contract_agreement_cover
+          file-item-schema-name: 合同协议书-封面
           schema: |
             {
+              "title": "contract_agreement_cover",
               "type": "object",
-              "title": "qualification_certificate_message",
+              "properties": {
+                "contract_number": {
+                  "type": "string",
+                  "title": "合同编号"
+                },
+                "project_name": {
+                  "type": "string",
+                  "title": "项目名称"
+                },
+                "client": {
+                  "type": "string",
+                  "title": "甲方"
+                },
+                "contractor": {
+                  "type": "string",
+                  "title": "乙方"
+                },
+                "signing_location": {
+                  "type": "string",
+                  "title": "签约地点"
+                },
+                "contract_date": {
+                  "type": "string",
+                  "title": "签订日期"
+                }
+              }
+            }
+        - match-keywords:
+            - 工程概况
+            - 工程名称
+            - 工程地点
+            - 工程立项批准
+            - 资金来源
+            - 工程内容
+            - 工程承包范围
+          exclude-keywords:
+          file-item-schema-name: 合同协议书-首页
+          table-name: contract_agreement_first
+          schema: |
+            {
+                "title": "contract_agreement_first",
+                "type": "object",
                 "properties": {
-                    "economic_nature": {
-                        "type": "string",
-                        "title": "经济性质"
-                    },
-                    "USCI": {
-                        "type": "string",
-                        "title": "统一社会信用代码"
-                    },
-                    "legal_person_representative": {
-                        "type": "string",
-                        "title": "法人代表"
-                    },
-                    "licence_issuing": {
-                        "type": "string",
-                        "title": "发证机关"
-                    },
-                    "detail_address": {
-                        "type": "string",
-                        "title": "详细地址"
-                    },
-                    "certification_categories_grades": {
-                        "type": "string",
-                        "title": "资质类别和等级"
-                    },
-                    "validity_period": {
-                        "type": "string",
-                        "title": "有效期"
-                    },
-                    "firm_name": {
-                        "type": "string",
-                        "title": "企业名称"
-                    },
-                    "registered_capital": {
-                        "type": "string",
-                        "title": "注册资人"
-                    },
-                    "certificate_number": {
-                        "type": "string",
-                        "title": "证书编号"
-                    }
+                  "client": {
+                    "type": "string",
+                    "title": "发包人"
+                  },
+                  "contractor": {
+                    "type": "string",
+                    "title": "承包人"
+                  },
+                  "project_name": {
+                    "type": "string",
+                    "title": "工程名称"
+                  },
+                  "project_location": {
+                    "type": "string",
+                    "title": "工程地点"
+                  },
+                  "project_approval_number": {
+                    "type": "string",
+                    "title": "工程立项批准文号"
+                  },
+                  "funding_source": {
+                    "type": "string",
+                    "title": "资金来源"
+                  },
+                  "start_date": {
+                    "type": "string",
+                    "title": "计划开工日期"
+                  },
+                  "completion_date": {
+                    "type": "string",
+                    "title": "计划竣工日期"
+                  },
+                  "quality_compliance": {
+                    "type": "string",
+                    "title": "工程质量是否合格"
+                  },
+                  "signing_contract_price_rmb_capital": {
+                    "type": "string",
+                    "title": "签约合同价-人名币（大写）"
+                  },
+                  "direct_cost": {
+                    "type": "string",
+                    "title": "签约合同价-直接费用（RMB）"
+                  },
+                  "fees_and_profit": {
+                    "type": "string",
+                    "title": "签约合同价-各项费用和利润（RMB）"
+                  },
+                  "safety_fee": {
+                    "type": "string",
+                    "title": "签约合同价-安全文明费（RMB）"
+                  },
+                  "regulatory_fee": {
+                    "type": "string",
+                    "title": "签约合同价-规费（RMB）"
+                  },
+                  "construction_cost": {
+                    "type": "string",
+                    "title": "签约合同价-建安费用（RMB）"
+                  }
+                }
+              }
+        - match-keywords:
+            - 暂列金额
+            - 合同价格形式
+            - 项目经理
+            - 合同文件构成
+            - 中标通知书
+            - 投标函及其附录
+            - 专用合同条款及其附件
+            - 通用合同条款
+          exclude-keywords:
+          table-name: contract_agreement_second
+          file-item-schema-name: 合同协议书-第二页
+          schema: |
+            {
+                "title": "contract_agreement_second",
+                "type": "object",
+                "properties": {
+                  "quality_compliance": {
+                          "type": "string",
+                          "title": "工程质量是否合格"
+                  },
+                  "warranty_requirement":{
+                          "type": "string",
+                          "title": "保修要求"
+                  },
+                  "signing_contract_price_rmb_capital": {
+                          "type": "string",
+                          "title": "签约合同价-人名币（大写）"
+                  },
+                  "safety_fee": {
+                    "type": "string",
+                    "title": "签约合同价-安全文明费（RMB）"
+                  },
+                  "material_project_evaluate_fee": {
+                    "type": "string",
+                    "title": "签约合同价-材料工程暂估价（RMB）"
+                  },
+                  "major_project_evaluate_fee": {
+                    "type": "string",
+                    "title": "签约合同价-专业工程暂估价（RMB）"
+                  },
+                  "sales_tax_amount": {
+                    "type": "string",
+                    "title": "签约合同价-销项税额（RMB）"
+                  },
+                  "additional_tax_amount": {
+                    "type": "string",
+                    "title": "签约合同价-附加税费（RMB）"
+                  },
+                  "other_project_fees": {
+                    "type": "string",
+                    "title": "签约合同价-其他项目费（RMB）"
+                  },
+                  "provisional_sum": {
+                    "type": "string",
+                    "title": "签约合同价-暂列金额（RMB）"
+                  },
+                  "provisional_valuation": {
+                    "type": "string",
+                    "title": "签约合同价-暂估价（RMB）"
+                  },
+                  "discount_amount": {
+                    "type": "string",
+                    "title": "签约合同价-优惠（RMB）"
+                  },
+                  "transaction_service_fee": {
+                    "type": "string",
+                    "title": "交易服务费"
+                  },
+                  "contractor_price_form":{
+                    "type" : "string" ,
+                    "title": "合同价格形式"
+                   },
+                  "contractor_project_manager": {
+                    "type": "string",
+                    "title": "项目经理"
+                  }
                 }
             }
+        - match-keywords:
+            - 组织机构代码
+            - 法定代表人
+            - 委托代理人
+            - 电话
+            - 传真
+            - 电子信箱
+            - 开户银行
+            - 账号
+          exclude-keywords:
+          table-name: contract_agreement_last_basic_info
+          file-item-schema-name: 合同协议书-末页
+          schema: |
+            {
+                "definitions": {
+                  "contract_agreement_last_basic_info": {
+                    "type": "object",
+                    "properties": {
+                      "signing_date": {
+                        "type": "string",
+                        "title": "签订时间"
+                      },
+                      "signing_location": {
+                        "type": "string",
+                        "title": "签订地点"
+                      }
+                    }
+                  },
+                  "client_info": {
+                    "type": "object",
+                    "properties": {
+                      "seal_status": {
+                        "type": "boolean",
+                        "title": "发包人是否盖章"
+                      },
+                      "legal_representative_signature": {
+                        "type": "string",
+                        "title": "法定代表人或其委托代理人-签字"
+                      },
+                      "operator_signature": {
+                        "type": "string",
+                        "title": "经办人-签字"
+                      },
+                      "organization_code": {
+                        "type": "string",
+                        "title": "组织机构代码"
+                      },
+                      "postal_code": {
+                        "type": "string",
+                        "title": "邮政编码"
+                      },
+                      "legal_representative": {
+                        "type": "string",
+                        "title": "法定代表人"
+                      },
+                      "authorized_agent": {
+                        "type": "string",
+                        "title": "委托代理人"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "title": "电话"
+                      },
+                      "fax": {
+                        "type": "string",
+                        "title": "传真"
+                      },
+                      "email": {
+                        "type": "string",
+                        "title": "电子信箱"
+                      },
+                      "bank_name": {
+                        "type": "string",
+                        "title": "开户银行"
+                      },
+                      "bank_account": {
+                        "type": "string",
+                        "title": "账号"
+                      }
+                    }
+                  },
+                  "contractor_info": {
+                    "type": "object",
+                    "properties": {
+                      "seal_status": {
+                        "type": "boolean",
+                        "title": "承包人是否盖章"
+                      },
+                      "organization_code": {
+                        "type": "string",
+                        "title": "组织机构代码"
+                      },
+                      "postal_code": {
+                        "type": "string",
+                        "title": "邮政编码"
+                      },
+                      "legal_representative": {
+                        "type": "string"
+                      },
+                      "authorized_agent": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "title": "电话"
+                      },
+                      "fax": {
+                        "type": "string",
+                        "title": "传真"
+                      },
+                      "email": {
+                        "type": "string",
+                        "title": "电子信箱"
+                      },
+                      "bank_name": {
+                        "type": "string",
+                        "title": "开户银行"
+                      },
+                      "bank_account": {
+                        "type": "string",
+                        "title": "账号"
+                      }
+                    }
+                  }
+                }
+            }
+    - file-set-schema: 项目管理机构
+      file-item-schema:
+        - match-keywords:
+            - 竣工验收证书
+            - 开工日期
+            - 竣工日期
+            - 合同造价
+            - 施工决算
+          exclude-keywords:
+          file-item-schema-name: 竣工验收证书
+          table-name: project_acceptance_certificate
+          schema: |
+            {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "title": "project_acceptance_certificate",
+                "type": "object",
+                "properties": {
+                  "project_name": {
+                    "type": "string",
+                    "title": "工程名称",
+                    "const": "银华路（永裕北路-经九路）道路工程"
+                  },
+                  "start_date": {
+                    "type": "string",
+                    "title": "开工日期",
+                    "pattern": "^\\d{4}年\\d{2}月\\d{2}日$",
+                    "examples": ["2018年04月15日"]
+                  },
+                  "contractor": {
+                    "type": "string",
+                    "title": "施工单位",
+                    "const": "湖南柏加建筑园林（集团）有限公司"
+                  },
+                  "completion_date": {
+                    "type": "string",
+                    "title": "竣工日期",
+                    "examples": [""]
+                  },
+                  "contract_price": {
+                    "type": "number",
+                    "title": "合同造价（万元）",
+                    "examples": [5006.6]
+                  },
+                  "construction_settlement": {
+                    "type": ["number", "null"],
+                    "title": "施工决算（万元）"
+                  },
+                  "acceptance_scope": {
+                    "type": "string",
+                    "title": "验收范围及数量",
+                    "examples": ["道路路基路面、雨污水管道、综合管线、人行道、绿化、亮化、交通工程"]
+                  },
+                  "existing_issues": {
+                    "type": "string",
+                    "title": "存在问题及处理意见"
+                  },
+                  "quality_evaluation": {
+                    "type": "string",
+                    "title": "对工程质量的评价"
+                  },
+                  "acceptance_date": {
+                    "type": "string",
+                    "title": "竣工验收日期",
+                    "pattern": "^\\d{4}年\\d{1,2}月\\d{1,2}日$",
+                    "examples": ["2021年2月1日"]
+                  },
+                  "acceptance_status": {
+                    "type": "object",
+                    "title": "验收单位意见",
+                    "properties": {
+                      "construction_unit": {
+                        "type": "string",
+                        "title": "建设单位是否同意验收",
+                        "enum": ["同意", "不同意", "未填写"],
+                        "examples": ["同意"]
+                      },
+                      "design_unit": {
+                        "type": "string",
+                        "title": "设计单位是否同意验收",
+                        "enum": ["同意", "不同意", "未填写"],
+                        "examples": ["同意"]
+                      },
+                      "supervision_unit": {
+                        "type": "string",
+                        "title": "监理单位是否同意验收",
+                        "enum": ["同意", "不同意", "未填写"],
+                        "examples": ["同意"]
+                      },
+                      "contractor_unit": {
+                        "type": "string",
+                        "title": "施工单位是否同意验收",
+                        "enum": ["同意", "不同意", "未填写"],
+                        "examples": ["同意"]
+                      },
+                      "survey_unit": {
+                        "type": "string",
+                        "title": "勘察单位是否同意验收",
+                        "enum": ["同意", "不同意", "未填写"],
+                        "examples": ["未填写"]
+                      },
+                      "invited_unit": {
+                        "type": "string",
+                        "title": "邀请单位是否同意验收",
+                        "enum": ["同意", "不同意", "未填写"],
+                        "examples": ["未填写"]
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "project_name",
+                  "start_date",
+                  "contractor",
+                  "contract_price",
+                  "acceptance_scope",
+                  "acceptance_date",
+                  "acceptance_status"
+                ]
+              }

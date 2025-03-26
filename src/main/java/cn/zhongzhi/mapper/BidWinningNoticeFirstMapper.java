@@ -9,4 +9,11 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface BidWinningNoticeFirstMapper extends BaseMapper<BidWinningNoticeFirst> {
+
+    /**
+     * 一对多新增中标通知书及关联的施工员信息
+     * @param bidWinningNoticeFirst 中标通知书信息
+     * @return 影响的行数
+     */
+    int insertWithConstructionCrews(BidWinningNoticeFirst bidWinningNoticeFirst);
 }

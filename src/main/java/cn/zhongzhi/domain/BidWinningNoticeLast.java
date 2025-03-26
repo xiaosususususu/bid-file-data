@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.util.List;
  */
 @Data
 @TableName("bid_winning_notice_last")
+@Builder
 public class BidWinningNoticeLast {
     /**
      * 主键，唯一标识中标标段通知书记录
@@ -78,7 +80,7 @@ public class BidWinningNoticeLast {
     /**
      * 安全员列表
      */
-    private List<BidWinningNoticeSafetyOfficers> bidWinningNoticeSafetyOfficersList;
+    private List<BidWinningNoticeSafetyOfficers> safetyOfficersList;
     /**
      * 记录创建的时间，自动设置为当前时间
      */

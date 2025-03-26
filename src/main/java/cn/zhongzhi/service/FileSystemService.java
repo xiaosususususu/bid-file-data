@@ -12,4 +12,11 @@ public interface FileSystemService extends IService<FileSystem> {
      * @param fullPath 完整路径
      */
     String saveFileOrFolder(String fullPath);
+
+    /**
+     * 文件ID交换路径
+     * @param fileId 文件ID
+     * @return 全路径
+     */
+    String fileIdExchangeFullPath(String fileId);
 }

@@ -5,6 +5,7 @@ import cn.zhongzhi.enums.TableNameMapServiceEnum;
 import cn.zhongzhi.service.IStructuralDataPublicInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -23,6 +24,7 @@ public class StructuralDataOperationExecute {
      * @param structuralData 结构化数据
      * @param relationColumnData 关联字段数据
      */
+    @Transactional
     public void execute(String tableName, String structuralData,Map<String,String> relationColumnData){
         //得到枚举
         TableNameMapServiceEnum tableNameMapServiceEnum = TableNameMapServiceEnum.valueOf(tableName);

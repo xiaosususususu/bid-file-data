@@ -50,8 +50,24 @@ public class FileSystemServiceImpl extends ServiceImpl<FileSystemMapper, FileSys
         //取到fileName的后缀
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
         FileSystem fileSystemFile = FileSystem.builder().name(pathStrArr[pathStrArr.length - 1]).type(FileTypeEnum.FILE.name()).extension(extension).path(fullPath).depth(pathStrArr.length - 1).parentId(parentId).build();
-        fileSystemMapper.insert(fileSystemFile);
-        return fileSystemFile.getId();
+        //判断是否存在
+        FileSystem fileSystemOne = fileSystemMapper.selectOne(new QueryWrapper<FileSystem>().eq("path", fullPath));
+        if (ObjUtil.isEmpty(fileSystemOne)) {
+            fileSystemMapper.insert(fileSystemFile);
+            return fileSystemFile.getId();
+        } else {
+            return fileSystemOne.getId();
+        }
+    }
+
+    @Override
+    public String fileIdExchangeFullPath(String fileId) {
+        //根据文件ID查询path
+        FileSystem fileSystem = fileSystemMapper.selectById(fileId);
+        if (ObjUtil.isEmpty(fileSystem)) {
+            return null;
+        }
+        return fileSystem.getPath();
     }
 
 

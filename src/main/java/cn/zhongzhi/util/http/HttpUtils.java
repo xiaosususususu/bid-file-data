@@ -6,8 +6,6 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +49,7 @@ public class HttpUtils {
                     if (dataJsonObject != null){
                         JSONObject outputJsonObject = dataJsonObject.getJSONObject("outputs");
                         if (outputJsonObject != null){
+                            log.info("AI结构化识别成功：{}", outputJsonObject.getStr("result"));
                             return outputJsonObject.getStr("result");
                         }
                     }

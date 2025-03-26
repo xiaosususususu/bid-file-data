@@ -2,8 +2,10 @@ package cn.zhongzhi.config.properties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
@@ -38,9 +40,10 @@ public class KeywordConfig {
     }
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class ResultInnerGroup{
         private String fileSetSchemaName;
-        private String fileItemSchemaName;
+        private List<String> fileItemSchemaName;
         private List<InnerGroup> fileItemSchema;
     }
 }    

@@ -8,6 +8,7 @@ import cn.zhongzhi.service.SeniorEngineerCertificateFirstService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import java.util.Map;
 @Service
 @Slf4j
 public class SeniorEngineerCertificateFirstServiceImpl extends ServiceImpl<SeniorEngineerCertificateFirstMapper, SeniorEngineerCertificateFirst> implements SeniorEngineerCertificateFirstService, IStructuralDataPublicInterface {
+    @Transactional
     @Override
     public void dataOperation(String tableName, String jsonData, Map<String, String> relationColumnData) {
         SeniorEngineerCertificateFirst seniorEngineerCertificateFirst = JSONUtil.toBean(jsonData, SeniorEngineerCertificateFirst.class);

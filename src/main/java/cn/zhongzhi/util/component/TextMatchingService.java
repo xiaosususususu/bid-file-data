@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -22,6 +23,10 @@ public class TextMatchingService {
     public KeywordConfig.ResultInnerGroup matchAndGetSchema(String outerText, String innerText) {
         for (KeywordConfig.OuterGroup outerGroup : outerGroups) {
             if (outerText.contains(outerGroup.getFileSetSchema())) {
+                KeywordConfig.ResultInnerGroup resultInnerGroup = new KeywordConfig.ResultInnerGroup();
+                resultInnerGroup.setFileItemSchema(outerGroup.getFileItemSchema());
+                resultInnerGroup.setFileSetSchemaName(outerGroup.getFileSetSchema());
+                List<String> fileItemSchemaNameList = new ArrayList<>();
                 for (KeywordConfig.InnerGroup innerGroup : outerGroup.getFileItemSchema()) {
                     WordTree matchTree = new WordTree();
                     matchTree.addWords(innerGroup.getMatchKeywords());
@@ -37,7 +42,7 @@ public class TextMatchingService {
                     if (isMatched) {
                         List<String> excludeKeywords = innerGroup.getExcludeKeywords();
                         if (CollUtil.isEmpty(excludeKeywords)){
-                            return new KeywordConfig.ResultInnerGroup(outerGroup.getFileSetSchema(),innerGroup.getFileItemSchemaName(), outerGroup.getFileItemSchema());
+                            fileItemSchemaNameList.add(innerGroup.getFileItemSchemaName());
                         }
                         WordTree excludeTree = new WordTree();
                         excludeTree.addWords(innerGroup.getExcludeKeywords());
@@ -51,9 +56,13 @@ public class TextMatchingService {
                         //超过40%，即认为匹配失败，必须在40%以下
                         boolean isExcluded = excludeMatchSize >= excludeAllWordSize * 0.4;
                         if (!isExcluded) {
-                            return new KeywordConfig.ResultInnerGroup(outerGroup.getFileSetSchema(),innerGroup.getFileItemSchemaName(), outerGroup.getFileItemSchema());
+                            fileItemSchemaNameList.add(innerGroup.getFileItemSchemaName());
                         }
                     }
+                }
+                if (CollUtil.isNotEmpty(fileItemSchemaNameList)) {
+                    resultInnerGroup.setFileItemSchemaName(fileItemSchemaNameList);
+                    return resultInnerGroup;
                 }
             }
         }

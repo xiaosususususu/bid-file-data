@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhongzhi.mapper.BidWinningNoticeFirstMapper">
+
+    <insert id="insertWithConstructionCrews">
+        <!-- 插入中标通知书信息 -->
+        INSERT INTO bid_winning_notice_first
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="bidderId != null">bidder_id,</if>
+            <if test="fileId != null">file_id,</if>
+            <if test="noticeNumber != null">notice_number,</if>
+            <if test="projectNumber != null">project_number,</if>
+            <if test="companyName != null">company_name,</if>
+            <if test="roadLength != null">road_length,</if>
+            <if test="roadWidth != null">road_width,</if>
+            <if test="bidAmountCapitalized != null">bid_amount_capitalized,</if>
+            <if test="bidAmountNumeric != null">bid_amount_numeric,</if>
+            <if test="directCost != null">direct_cost,</if>
+            <if test="safetyFee != null">safety_fee,</if>
+            <if test="socialInsurance != null">social_insurance,</if>
+            <if test="constructionPeriod != null">construction_period,</if>
+            <if test="projectManagerName != null">project_manager_name,</if>
+            <if test="projectManagerRegistrationNumber != null">project_manager_registration_number,</if>
+            <if test="projectManagerSafetyCertificate != null">project_manager_safety_certificate,</if>
+            <if test="projectManagerIdNumber != null">project_manager_id_number,</if>
+            <if test="technicalLeaderName != null">technical_leader_name,</if>
+            <if test="technicalLeaderCertificateNumber != null">technical_leader_certificate_number,</if>
+            <if test="technicalLeaderIdNumber != null">technical_leader_id_number,</if>
+            <if test="bidWinningNoticeLastId != null">bid_winning_notice_last_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{id},
+            <if test="bidderId != null">#{bidderId},</if>
+            <if test="fileId != null">#{fileId},</if>
+            <if test="noticeNumber != null">#{noticeNumber},</if>
+            <if test="projectNumber != null">#{projectNumber},</if>
+            <if test="companyName != null">#{companyName},</if>
+            <if test="roadLength != null">#{roadLength},</if>
+            <if test="roadWidth != null">#{roadWidth},</if>
+            <if test="bidAmountCapitalized != null">#{bidAmountCapitalized},</if>
+            <if test="bidAmountNumeric != null">#{bidAmountNumeric},</if>
+            <if test="directCost != null">#{directCost},</if>
+            <if test="safetyFee != null">#{safetyFee},</if>
+            <if test="socialInsurance != null">#{socialInsurance},</if>
+            <if test="constructionPeriod != null">#{constructionPeriod},</if>
+            <if test="projectManagerName != null">#{projectManagerName},</if>
+            <if test="projectManagerRegistrationNumber != null">#{projectManagerRegistrationNumber},</if>
+            <if test="projectManagerSafetyCertificate != null">#{projectManagerSafetyCertificate},</if>
+            <if test="projectManagerIdNumber != null">#{projectManagerIdNumber},</if>
+            <if test="technicalLeaderName != null">#{technicalLeaderName},</if>
+            <if test="technicalLeaderCertificateNumber != null">#{technicalLeaderCertificateNumber},</if>
+            <if test="technicalLeaderIdNumber != null">#{technicalLeaderIdNumber},</if>
+            <if test="bidWinningNoticeLastId != null">#{bidWinningNoticeLastId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime}</if>
+        </trim>;
+
+        <!-- 插入关联的施工员信息 -->
+        <foreach collection="constructionCrews" item="crew" separator=";">
+            INSERT INTO bid_winning_notice_construction_crew
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                id,
+                bid_winning_notice_first_id,
+                <if test="crew.name != null">name,</if>
+                <if test="crew.positionCertificate != null">position_certificate,</if>
+                <if test="crew.idNumber != null">id_number,</if>
+                <if test="crew.createTime != null">create_time,</if>
+                <if test="crew.updateTime != null">update_time</if>
+            </trim>
+            VALUES
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{crew.id},
+                #{id}, <!-- 这里确保使用 BidWinningNoticeFirst 的 id -->
+                <if test="crew.name != null">#{crew.name},</if>
+                <if test="crew.positionCertificate != null">#{crew.positionCertificate},</if>
+                <if test="crew.idNumber != null">#{crew.idNumber},</if>
+                <if test="crew.createTime != null">#{crew.createTime},</if>
+                <if test="crew.updateTime != null">#{crew.updateTime}</if>
+            </trim>
+        </foreach>
+    </insert>
+
+</mapper>

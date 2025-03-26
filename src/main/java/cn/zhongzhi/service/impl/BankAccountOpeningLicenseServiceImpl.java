@@ -1,5 +1,7 @@
 package cn.zhongzhi.service.impl;
 
+import cn.hutool.core.util.ObjUtil;
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.zhongzhi.domain.BankAccountOpeningLicense;
 import cn.zhongzhi.mapper.BankAccountOpeningLicenseMapper;
@@ -22,7 +24,11 @@ public class BankAccountOpeningLicenseServiceImpl extends ServiceImpl<BankAccoun
     @Override
     @Transactional
     public void dataOperation(String tableName, String jsonData, Map<String, String> relationColumnData) {
-        BankAccountOpeningLicense bankAccountOpeningLicense = JSONUtil.toBean(jsonData, BankAccountOpeningLicense.class);
+        JSONObject openLicenseJsonObject = JSONUtil.parseObj(jsonData);
+        BankAccountOpeningLicense bankAccountOpeningLicense = openLicenseJsonObject.getBean("bank_account_opening_license", BankAccountOpeningLicense.class);
+        if (ObjUtil.isEmpty(bankAccountOpeningLicense)) {
+            bankAccountOpeningLicense = JSONUtil.toBean(jsonData, BankAccountOpeningLicense.class);
+        }
         bankAccountOpeningLicense.setBidderId(relationColumnData.getOrDefault("bidderId", ""));
         bankAccountOpeningLicense.setFileId(relationColumnData.getOrDefault("fileId", ""));
         if (!this.save(bankAccountOpeningLicense)) {

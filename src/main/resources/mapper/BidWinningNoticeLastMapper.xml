@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhongzhi.mapper.BidWinningNoticeLastMapper">
+    <insert id="insertWithSafetyOfficers">
+        <!-- 插入中标标段通知书信息 -->
+        INSERT INTO bid_winning_notice_last
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="bidderId != null">bidder_id,</if>
+            <if test="fileId != null">file_id,</if>
+            <if test="qualityOfficerName != null">quality_officer_name,</if>
+            <if test="qualityOfficerCertificateNumber != null">quality_officer_certificate_number,</if>
+            <if test="qualityOfficerIdNumber != null">quality_officer_id_number,</if>
+            <if test="performanceBondAmount != null">performance_bond_amount,</if>
+            <if test="submissionDeadline != null">submission_deadline,</if>
+            <if test="contractSignatureAuthority != null">contract_signature_authority,</if>
+            <if test="biddingAgencySignature != null">bidding_agency_signature,</if>
+            <if test="recordStampDate != null">record_stamp_date,</if>
+            <if test="bidWinningNoticeFirstId != null">bid_winning_notice_first_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{id},
+            <if test="bidderId != null">#{bidderId},</if>
+            <if test="fileId != null">#{fileId},</if>
+            <if test="qualityOfficerName != null">#{qualityOfficerName},</if>
+            <if test="qualityOfficerCertificateNumber != null">#{qualityOfficerCertificateNumber},</if>
+            <if test="qualityOfficerIdNumber != null">#{qualityOfficerIdNumber},</if>
+            <if test="performanceBondAmount != null">#{performanceBondAmount},</if>
+            <if test="submissionDeadline != null">#{submissionDeadline},</if>
+            <if test="contractSignatureAuthority != null">#{contractSignatureAuthority},</if>
+            <if test="biddingAgencySignature != null">#{biddingAgencySignature},</if>
+            <if test="recordStampDate != null">#{recordStampDate},</if>
+            <if test="bidWinningNoticeFirstId != null">#{bidWinningNoticeFirstId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime}</if>
+        </trim>;
+
+        <!-- 插入关联的安全员信息 -->
+        <foreach collection="safetyOfficersList" item="officer" separator=";">
+            INSERT INTO bid_winning_notice_safety_officers
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                id,
+                bid_winning_notice_last_id,
+                <if test="officer.name != null">name,</if>
+                <if test="officer.positionCertificate != null">position_certificate,</if>
+                <if test="officer.safetyCertificate != null">safety_certificate,</if>
+                <if test="officer.idNumber != null">id_number,</if>
+                <if test="officer.createTime != null">create_time,</if>
+                <if test="officer.updateTime != null">update_time</if>
+            </trim>
+            VALUES
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{officer.id},
+                #{id}, <!-- 使用 BidWinningNoticeLast 的 id 作为外键 -->
+                <if test="officer.name != null">#{officer.name},</if>
+                <if test="officer.positionCertificate != null">#{officer.positionCertificate},</if>
+                <if test="officer.safetyCertificate != null">#{officer.safetyCertificate},</if>
+                <if test="officer.idNumber != null">#{officer.idNumber},</if>
+                <if test="officer.createTime != null">#{officer.createTime},</if>
+                <if test="officer.updateTime != null">#{officer.updateTime}</if>
+            </trim>
+        </foreach>
+    </insert>
+</mapper>

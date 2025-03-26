@@ -16,8 +16,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -86,7 +85,7 @@ public class MinioOssService implements OssService {
      * 扫描桶下所有的图片路径和txt文档路径
      *
      * @return 包含图片路径和txt文档路径的列表
-     */
+     *//*
     @Override
     public Iterable<Result<Item>> scanImageAndTxtPaths() {
         List<String> paths = new ArrayList<>();
@@ -102,19 +101,99 @@ public class MinioOssService implements OssService {
                     .recursive(true)
                     .build());
 
-            /*for (Result<Item> result : results) {
+            *//*for (Result<Item> result : results) {
                 Item item = result.get();
                 String objectName = item.objectName();
                 if (isImage(objectName) || isTxt(objectName)) {
                     System.out.println(objectName);
                     paths.add(objectName);
                 }
-            }*/
+            }*//*
 
         } catch (Exception e) {
             log.error("扫描所有图片和文档路径失败", e);
         }
         return null;
+    }*/
+    @Override
+    public Iterable<Result<Item>> scanImageAndTxtPaths() {
+        List<Result<Item>> results = new ArrayList<>();
+        try {
+            MinioClient minioClient = MinioClient.builder()
+                    .endpoint(endpoint)
+                    .credentials(accessKey, secretKey)
+                    .build();
+
+            Queue<String> directoryQueue = new LinkedList<>();
+            // 从根目录开始
+            directoryQueue.add("");
+
+            while (!directoryQueue.isEmpty()) {
+                String currentPrefix = directoryQueue.poll();
+                String marker = null;
+
+                do {
+                    // 使用 listObjects 替代 listObjectsV2
+                    Iterable<Result<Item>> objects = minioClient.listObjects(
+                            ListObjectsArgs.builder()
+                                    .bucket(bucketName)
+                                    .prefix(currentPrefix)
+                                    // 目录分隔符
+                                    .delimiter("/")
+                                    // 分页标记
+                                    .marker(marker)
+                                    // 关闭递归，手动分层遍历
+                                    .recursive(false)
+                                    .build()
+                    );
+
+                    // 处理当前页的文件和子目录
+                    for (Result<Item> itemResult : objects) {
+                        Item item = itemResult.get();
+                        if (item.isDir()) {
+                            // 子目录加入队列，用于后续遍历
+                            directoryQueue.add(item.objectName());
+                        } else {
+                            String objectName = item.objectName();
+                            if (isTxt(objectName)) {
+                                results.add(itemResult);
+                            }
+                        }
+                    }
+
+                    // 更新分页标记（旧版本可能需要手动解析）
+                    marker = getNextMarker(objects);
+                } while (marker != null);
+            }
+
+            return results;
+        } catch (Exception e) {
+            log.error("分层遍历失败", e);
+            return Collections.emptyList();
+        }
+    }
+
+    // 自定义方法：从结果中获取下一页的 marker（模拟分页）
+    private String getNextMarker(Iterable<Result<Item>> objects) throws Exception {
+        String lastObjectName = null;
+        for (Result<Item> itemResult : objects) {
+            Item item = itemResult.get();
+            if (!item.isDir()) {
+                lastObjectName = item.objectName();
+            }
+        }
+        // 返回最后一个对象名作为下一页的 marker
+        return lastObjectName;
+    }
+
+    // 判断是否为图片
+    private boolean isImage(String objectName) {
+        return objectName.endsWith(".jpg") || objectName.endsWith(".png");
+    }
+
+    // 判断是否为txt文档
+    private boolean isTxt(String objectName) {
+        return objectName.endsWith(".txt");
     }
 
     /**

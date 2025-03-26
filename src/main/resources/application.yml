@@ -1,6 +1,10 @@
 spring:
+  data:
+    mongodb:
+      uri: mongodb://zhongzhi:ZzChina01$@192.168.179.90:27017/bid-file-data?authSource=admin
+
   datasource:
-    url: ${DATA_SOURCE_URL:jdbc:mysql://192.168.179.90:3306/bid_main_library?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8}
+    url: ${DATA_SOURCE_URL:jdbc:mysql://192.168.179.90:3306/bid_main_library?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&allowMultiQueries=true}
     username: ${DATA_SOURCE_USERNAME:root}
     password: ${DATA_SOURCE_PASSWORD:ZzChina01$}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -13,7 +17,7 @@ spring:
       # 最大连接池数量
       max-active: 20
       # 获取连接时最大等待时间，单位毫秒
-      max-wait: 60000
+      max-wait: 120000
       # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
       time-between-eviction-runs-millis: 60000
       # 配置一个连接在池中最小生存的时间，单位是毫秒

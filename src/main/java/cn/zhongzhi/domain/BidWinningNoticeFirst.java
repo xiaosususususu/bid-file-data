@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +16,9 @@ import java.util.List;
  * 中标通知书相关信息实体类，对应 bid_winning_notice_first 表
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("bid_winning_notice_first")
 public class BidWinningNoticeFirst {
     /**
@@ -128,7 +134,7 @@ public class BidWinningNoticeFirst {
     /**
      *  bidWinningNoticeConstructionCrewList 施工员
      */
-    private List<BidWinningNoticeConstructionCrew> bidWinningNoticeConstructionCrewList
+    private List<BidWinningNoticeConstructionCrew> constructionCrews;
     /**
      * 记录创建的时间，自动设置为当前时间
      */
